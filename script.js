@@ -21,10 +21,10 @@ Quiz.prototype.isEnded = function() {
     return this.questionIndex === this.questions.length;
 }
  
- 
+ // Utilized the shuffle function from the underscore.js library to shuffle the choices array
 function Question(text, choices, answer) {
     this.text = text;
-    this.choices = choices;
+    this.choices = _.shuffle(choices);
     this.answer = answer;
 }
  
@@ -78,6 +78,8 @@ function showScores() {
  
 // create questions here
 // questions sourced from https://quizlet.com/314467748/w3schools-javascript-quiz-flash-cards/
+// JavaScript Object Constructors
+
 var questions = [
     new Question("Inside which HTML element do we put the JavaScript?", ["&ltSCRIPT&gt", "&ltHEAD&gt","&ltDIV&gt", "&ltFOOTER&gt"], "&ltSCRIPT&gt"),
     new Question("What is the correct syntax for referring to an external script called 'xxx.js'?", ["&ltscript name='xxx.js'&gt", "&ltscript src='xxx.js'&gt", "&lta href ='xxx.js'&gt", "&ltscript href='xxx.js'&gt"], "&ltscript src='xxx.js'&gt"),
@@ -100,6 +102,12 @@ var questions = [
     // new Question("Which is not a JavaScript Framework?", ["Python Script", "JQuery","Django", "NodeJS"], "Django")
 
 ];
+
+//Random Question Generator, can't have the same order all the time! Credit to the Underscore.js
+var ranQuestion = _.shuffle(questions)[0];
+console.log(ranQuestion)
+// console.log(quiz.getQuestionIndex().choices)
+// console.log(answer)
  
 // create quiz
 var quiz = new Quiz(questions);
