@@ -102,7 +102,7 @@ function showScores() {
     gameOverHTML +=  " <label for='playerInitials' class='ml-2'>Initials: </label>";
     gameOverHTML +=  " <input type='text' class='form-control ml-2' id='playerInitials' placeholder='ABC' maxlength='3'>";
     gameOverHTML += " <button type='button' class='btn btn-outline-primary ml-2' id='submitInitials'>Submit</button> <span id='saved' class='ml-2 text-success d-none'>Score added!</span></div>";
-    gameOverHTML += "<table class='table table-striped mt-4'><thead><tr><th scope='col'>INITIALS</th><th scope='col'>SCORE</th></tr></thead><tbody><tr><td id='storedInitials'>" + dataStored[0].playerInitials + "</td><td id='storedScore'>" + dataStored[0].finalScore + "</td></tr></tbody>";
+    gameOverHTML += "<table class='table table-striped mt-4'><thead><tr><th scope='col'>INITIALS</th><th scope='col'>SCORE</th></tr></thead><tbody><tr><td id='storedInitials'>BFT</td><td id='storedScore'>5</td></tr></tbody>";
     var element = document.getElementById("quiz");
     element.innerHTML = gameOverHTML;
     leaderBoard();
