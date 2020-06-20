@@ -9,10 +9,23 @@ quizTimer(quizRunTime);
 function quizTimer(r) {
   
      timerInterval = setInterval(function() {
+        Quiz.prototype.guess = function(answer) {
+            if(this.getQuestionIndex().isCorrectAnswer(answer)) {
+                this.score++;
+                this.questionIndex++;
+            }
+            else {
+                (r -= 10);
+                this.questionIndex++;
+            }
+         
+            
+        }
       r--;
       timerDisplay.textContent = r;
      
-      if (r === 0) {
+      if (r <= 0) {
+        clearInterval(timerInterval);
         showScores();
       };
     }, 1000);
@@ -28,18 +41,7 @@ Quiz.prototype.getQuestionIndex = function() {
     return this.questions[this.questionIndex];
 }
  
-Quiz.prototype.guess = function(answer) {
-    if(this.getQuestionIndex().isCorrectAnswer(answer)) {
-        this.score++;
-        this.questionIndex++;
-    }
-    else {
-        (r -= 20);
-        this.questionIndex++;
-    }
- 
-    
-}
+
  
 Quiz.prototype.isEnded = function() {
     return this.questionIndex === this.questions.length;
