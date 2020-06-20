@@ -4,6 +4,7 @@ var timerInterval;
 var timerDisplay = document.getElementById("timer");
 var quizRunTime = 30;
 var r;
+
 quizTimer(quizRunTime);
 
 function quizTimer(r) {
