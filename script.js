@@ -1,4 +1,23 @@
 // template by webdevtrick (https://webdevtrick.com)
+var dataStored = JSON.parse(localStorage.getItem("score"));
+var timerInterval;
+var timerDisplay = document.getElementById("timer");
+var quizRunTime = 30;
+var r;
+quizTimer(quizRunTime);
+
+function quizTimer(r) {
+  
+     timerInterval = setInterval(function() {
+      r--;
+      timerDisplay.textContent = r;
+     
+      if (r === 0) {
+        showScores();
+      };
+    }, 1000);
+  };
+  
 function Quiz(questions) {
     this.score = 0;
     this.questions = questions;
@@ -12,9 +31,14 @@ Quiz.prototype.getQuestionIndex = function() {
 Quiz.prototype.guess = function(answer) {
     if(this.getQuestionIndex().isCorrectAnswer(answer)) {
         this.score++;
+        this.questionIndex++;
+    }
+    else {
+        (r -= 20);
+        this.questionIndex++;
     }
  
-    this.questionIndex++;
+    
 }
  
 Quiz.prototype.isEnded = function() {
@@ -72,8 +96,16 @@ function showProgress() {
 function showScores() {
     var gameOverHTML = "<h1>Result</h1>";
     gameOverHTML += "<h2 id='score'> Your scores: " + quiz.score + "</h2>";
+    gameOverHTML += "<h4>To add you score to the leaderboard, please enter your initials:</h4>" + "<div class='form-inline'>";
+    gameOverHTML +=  " <label for='playerInitials' class='ml-2'>Initials: </label>";
+    gameOverHTML +=  " <input type='text' class='form-control ml-2' id='playerInitials' placeholder='ABC' maxlength='3'>";
+    gameOverHTML += " <button type='button' class='btn btn-outline-primary ml-2' id='submitInitials'>Submit</button> <span id='saved' class='ml-2 text-success d-none'>Score added!</span></div>";
+    gameOverHTML += "<table class='table table-striped mt-4'><thead><tr><th scope='col'>INITIALS</th><th scope='col'>SCORE</th></tr></thead><tbody><tr><td id='storedInitials'>" + dataStored[0].playerInitials + "</td><td id='storedScore'>" + dataStored[0].finalScore + "</td></tr></tbody>";
     var element = document.getElementById("quiz");
     element.innerHTML = gameOverHTML;
+    leaderBoard();
+   
+
 };
  
 // create questions here
@@ -114,3 +146,35 @@ var quiz = new Quiz(questions);
  
 // display quiz
 populate();
+
+//Leaderboard will show previous score. 
+function leaderBoard() {
+    
+    var storeBtn = document.getElementById("submitInitials");
+
+    storeBtn.addEventListener("click", function() {
+
+        var saved = document.getElementById("saved");
+        var playerInitials = document.getElementById("playerInitials").value.toUpperCase();
+        var totalPoints = quiz.score;
+        var storedInitials = document.getElementById("storedInitials");
+        var storedScore = document.getElementById("storedScore");
+
+        var highScores = [
+            {
+              playerInitials: playerInitials,
+              finalScore: totalPoints
+            }
+        ];
+
+        storedInitials.innerText = highScores[0].playerInitials;
+        storedScore.innerText = highScores[0].finalScore;
+
+        localStorage.setItem("score", JSON.stringify(highScores));
+
+    });
+
+    
+    console.log(dataStored[0].playerInitials);
+    console.log(dataStored[0].finalScore);
+};
